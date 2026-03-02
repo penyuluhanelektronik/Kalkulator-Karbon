@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Jejak Karbon Sederhana</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0fdf4; display: flex; justify-content: center; padding: 20px; }
+        .container { background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 100%; max-width: 400px; }
+        h2 { color: #166534; text-align: center; }
+        .input-group { margin-bottom: 1.5rem; }
+        label { display: block; margin-bottom: 0.5rem; color: #374151; font-weight: 600; }
+        input { width: 100%; padding: 0.75rem; border: 1px solid #d1d5db; border-radius: 8px; box-sizing: border-box; }
+        button { width: 100%; padding: 1rem; background-color: #22c55e; color: white; border: none; border-radius: 8px; font-size: 1rem; cursor: pointer; font-weight: bold; }
+        button:hover { background-color: #16a34a; }
+        #result { margin-top: 1.5rem; padding: 1rem; border-radius: 8px; text-align: center; display: none; }
+        .high-impact { background-color: #fee2e2; color: #991b1b; }
+        .low-impact { background-color: #dcfce7; color: #166534; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Kalkulator Karbon 🌿</h2>
+    <p style="font-size: 0.9rem; color: #6b7280; text-align: center;">Estimasi emisi bulanan Anda</p>
+    
+    <div class="input-group">
+        <label>Listrik (kWh/bulan)</label>
+        <input type="number" id="elec" placeholder="Contoh: 150">
+    </div>
+
+    <div class="input-group">
+        <label>Bensin Mobil (Liter/bulan)</label>
+        <input type="number" id="fuel" placeholder="Contoh: 50">
+    </div>
+
+    <button onclick="calculateCarbon()">Hitung Jejak Karbon</button>
+
+    <div id="result">
+        <strong id="scoreText"></strong><br>
+        <span id="advice"></span>
+    </div>
+</div>
+
+<script>
+    function calculateCarbon() {
+        // Mengambil nilai input
+        const electricity = document.getElementById('elec').value || 0;
+        const fuel = document.getElementById('fuel').value || 0;
+
+        // Rumus sederhana (Faktor Emisi)
+        // Emisi = (kWh * 0.85) + (Liter * 2.31)
+        const totalEmisi = (electricity * 0.85) + (fuel * 2.31);
+
+        const resultDiv = document.getElementById('result');
+        const scoreText = document.getElementById('scoreText');
+        const advice = document.getElementById('advice');
+
+        resultDiv.style.display = 'block';
+        scoreText.innerText = `Total Emisi: ${totalEmisi.toFixed(2)} kg CO2 / bulan`;
+
+        // Logika saran sederhana
+        if (totalEmisi > 300) {
+            resultDiv.className = 'high-impact';
+            advice.innerText = "Jejak karbon Anda cukup tinggi. Pertimbangkan untuk menghemat listrik!";
+        } else {
+            resultDiv.className = 'low-impact';
+            advice.innerText = "Bagus! Jejak karbon Anda relatif rendah.";
+        }
+    }
+</script>
+
+</body>
+</html>
